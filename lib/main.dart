@@ -1,3 +1,4 @@
+import 'package:coriander/next_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +14,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -36,14 +36,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
+
+  String text = 'next';
+  final myFocusNode = FocusNode();
+  final myController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,19 +52,38 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('coriander'),
         actions: <Widget>[Icon(Icons.add), Icon(Icons.share)],
       ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('next'),
-          onPressed: () {
+      body: Container(
+        width: double.infinity,
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+              hintText: 'name',
+            ),
             
-          }
+            ),
+            TextField(
+              controller: myController,
+              decoration: InputDecoration(
+              hintText: 'email',
+              ),
+            ),
+            FloatingActionButton(
+              child: Text('sign up'),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: Text(myController.text),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
